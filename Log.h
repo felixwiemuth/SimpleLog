@@ -30,7 +30,9 @@ class Log
 
         //methods
         bool load(const char path[]); //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened
+        bool load(); //calls 'load(const char path[])' with 'std_file_name' and 'std_file_ending'
         bool save(const char path[]); //saves 'logstr' to file 'path' or overwrites it (!) -- return value: true=ok | errors: false=file could not be opened
+        bool save(); //calls 'save(const char path[])' with 'std_file_name' and 'std_file_ending'
         void add(std::string s); //add normal entry
         void err(std::string s); //add error entry
 

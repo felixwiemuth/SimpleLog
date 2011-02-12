@@ -44,6 +44,11 @@ bool Log::load(const char path[])
     return true; //return true = O.K.
 }
 
+bool Log::load()
+{
+    load((std_file_name + std_file_ending).c_str());
+}
+
 bool Log::save(const char path[])
 {
     ofstream file(path, ios::trunc); //create filestream to write, open file
@@ -59,6 +64,11 @@ bool Log::save(const char path[])
     file.close(); //close file filestream
 
     return true; //return true = O.K.
+}
+
+bool Log::save()
+{
+    save((std_file_name + std_file_ending).c_str());
 }
 
 void Log::add(string s)
