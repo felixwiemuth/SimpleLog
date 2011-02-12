@@ -16,11 +16,12 @@ Log::Log()
     add("--- Begin logging now ---");
 }
 
-bool Log::load_log(const char path[])
+bool Log::load(const char path[])
 {
     logstr.clear();
     ifstream infile(path); //create filestream to read, open file
-    if (infile.is_open() == false) return false; //file not found or couldn´t be opened -> abort and return false
+    if (infile.is_open() == false)
+        return false; //file not found or couldn´t be opened -> abort and return false
 
     string line; //buffer for single lines of the file
 
@@ -37,10 +38,11 @@ bool Log::load_log(const char path[])
 }
 
 //TODO last line is written twice into text-file!
-bool Log::save_log(const char path[])
+bool Log::save(const char path[])
 {
     ofstream file(path, ios::trunc); //create filestream to write, open file
-    if (file.is_open() == false) return false; //file not opended -> abort and return false
+    if (file.is_open() == false)
+        return false; //file not opended -> abort and return false
 
     for(int i=0; i < logstr.size(); i++) //write line by line into textfile
     {
@@ -67,14 +69,17 @@ void Log::err(std::string s)
 
 void Log::print(unsigned int entry)
 {
-    if (entry >= logstr.size()) return; //catching out of range
+    if (entry >= logstr.size())
+        return; //catching out of range
     cout << logstr[entry] << endl;
 }
 
 void Log::print(unsigned int start, unsigned int end)
 {
-    if (end == 0) end = logstr.size()-1;
-    if ( (end > logstr.size()-1) || (start > end) ) return; //catching out of range
+    if (end == 0)
+        end = logstr.size()-1;
+    if ( (end > logstr.size()-1) || (start > end) )
+        return; //catching out of range
 
     for (int i=start; i <= end; i++)
     {

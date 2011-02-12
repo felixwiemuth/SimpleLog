@@ -19,8 +19,8 @@ class Log
         Log();
 
         //methods
-        bool load_log(const char path[]); //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened
-        bool save_log(const char path[]); //saves 'logstr' to file 'path' or overwrites it (!) -- return value: true=ok | errors: false=file could not be opened
+        bool load(const char path[]); //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened
+        bool save(const char path[]); //saves 'logstr' to file 'path' or overwrites it (!) -- return value: true=ok | errors: false=file could not be opened
         void add(std::string s); //add normal entry
         void err(std::string s); //add error entry
 
