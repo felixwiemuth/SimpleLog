@@ -12,6 +12,7 @@ using namespace std;
 
 Log::Log()
 {
+    echo = true;
     std_file_ending = ".log";
     std_file_name = "log";
     seperation_symbol = "\n";
@@ -83,6 +84,16 @@ void Log::err(std::string s)
     send_console();
 }
 
+void Log::echo_on()
+{
+    echo = true;
+}
+
+void Log::echo_off()
+{
+    echo = false;
+}
+
 void Log::print(unsigned int entry)
 {
     if (entry >= logstr.size())
@@ -113,5 +124,6 @@ void Log::print()
 
 void Log::send_console()
 {
-    cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
+    if (echo)
+        cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
 }

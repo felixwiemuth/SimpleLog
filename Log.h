@@ -12,12 +12,14 @@ class Log
     //data
     private:
         std::vector<std::string> logstr;
+        //mode vars
+        bool echo; //if set 'true', every new entry will be printed in console by 'send_console()'
         //text-vars
         std::string std_file_ending; //standard file ending
         std::string std_file_name; //standard file name
         std::string seperation_symbol; //string to seperate log entries in log-file
         std::string output_symbol; //string to be put before every log entry printed in the console
-        std::string error_symbol;
+        std::string error_symbol; //string to be put before every error entry
         //messages
         std::string msg_log_info; //information about "SimpleLog" at construction of object
         std::string msg_begin_log; //information about starting to log
@@ -35,6 +37,10 @@ class Log
         bool save(); //calls 'save(const char path[])' with 'std_file_name' and 'std_file_ending'
         void add(std::string s); //add normal entry
         void err(std::string s); //add error entry
+
+        //mode switches
+        void echo_on();
+        void echo_off();
 
         //print methods
         void print(unsigned int entry); //displays 'logstr[entry]'
