@@ -44,7 +44,7 @@ class Log
 
         //print methods
         void print(unsigned int entry); //displays 'logstr[entry]'
-        void print(unsigned int start, unsigned int end); //displays 'logstr[start]' to 'logstr[end]' -- if end=0 logstr[start] to logstr[entries] will be displayes
+        void print(unsigned int start, unsigned int end); //displays 'logstr[start]' to 'logstr[end]' -- if end<start logstr[start] to logstr[entries] will be displayes
         void print(); //displays whole content of 'logstr'
 
     private:

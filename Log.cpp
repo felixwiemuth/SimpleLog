@@ -103,22 +103,23 @@ void Log::print(unsigned int entry)
 
 void Log::print(unsigned int start, unsigned int end)
 {
-    if (end == 0)
-        end = logstr.size()-1;
+    vector<string>::iterator last;
     if ( (end > logstr.size()-1) || (start > end) )
-        return; //catching out of range
+        last = logstr.end();
+    else
+        last = logstr.begin() + end + 1;
 
-    for (int i=start; i <= end; i++)
+    for (vector<string>::iterator it = logstr.begin() + start; it != last; ++it)
     {
-        cout << logstr[i] << endl;
+        cout << *it << endl;
     }
 }
 
 void Log::print()
 {
-    for (int i=0; i < logstr.size(); i++)
+    for (vector<string>::iterator it = logstr.begin(); it != logstr.end(); ++it)
     {
-        cout << logstr[i] << endl;
+        cout << *it << endl;
     }
 }
 
