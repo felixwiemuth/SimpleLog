@@ -4,22 +4,6 @@
 #include <vector>
 #include <string>
 
-//struct Entry
-//{
-//    enum Entry_type
-//    {
-//        N,
-//        ERR
-//    };
-//    std::string text;
-//    Entry_type type;
-//
-//    Entry(Entry_type t, std::string tx)
-//    {
-//        text = tx;
-//        type = t;
-//    }
-//};
 
 //class to log all program acitivity
 

@@ -10,16 +10,11 @@
 
 using namespace std;
 
-
-//constructors definition
-
 Log::Log()
 {
     add("Logging done by Log 1.0");
     add("--- Begin logging now ---");
 }
-
-//class methods definition
 
 bool Log::load_log(const char path[]) //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened
 {
