@@ -25,7 +25,6 @@ bool Log::load(const char path[])
 
     string line; //buffer for single lines of the file
 
-    //TODO eof() correct?
     while ( !(infile.eof()) )
     {
         getline(infile, line);
@@ -37,14 +36,13 @@ bool Log::load(const char path[])
     return true; //return true = O.K.
 }
 
-//TODO last line is written twice into text-file!
 bool Log::save(const char path[])
 {
     ofstream file(path, ios::trunc); //create filestream to write, open file
     if (file.is_open() == false)
         return false; //file not opended -> abort and return false
 
-    for(int i=0; i < logstr.size(); i++) //write line by line into textfile
+    for(int i=0; i < logstr.size()-1; i++) //write line by line into textfile
     {
         file << logstr[i] + "\n";
     }
