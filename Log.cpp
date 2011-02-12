@@ -56,9 +56,9 @@ bool Log::save(const char path[])
     if (file.is_open() == false)
         return false; //file not opended -> abort and return false
 
-    for(int i=0; i < logstr.size()-1; i++) //write line by line into textfile
+    for(vector<string>::iterator entry = logstr.begin(); entry != logstr.end(); ++entry) //write line by line into textfile
     {
-        file << logstr[i] << seperation_symbol;
+        file << *entry << seperation_symbol;
     }
     file << logstr.back(); //write last line without creating new line
 
@@ -109,17 +109,17 @@ void Log::print(unsigned int start, unsigned int end)
     else
         last = logstr.begin() + end + 1;
 
-    for (vector<string>::iterator it = logstr.begin() + start; it != last; ++it)
+    for (vector<string>::iterator entry = logstr.begin() + start; entry != last; ++entry)
     {
-        cout << *it << endl;
+        cout << *entry << endl;
     }
 }
 
 void Log::print()
 {
-    for (vector<string>::iterator it = logstr.begin(); it != logstr.end(); ++it)
+    for (vector<string>::iterator entry = logstr.begin(); entry != logstr.end(); ++entry)
     {
-        cout << *it << endl;
+        cout << *entry << endl;
     }
 }
 
