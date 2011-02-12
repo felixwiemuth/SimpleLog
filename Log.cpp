@@ -16,7 +16,7 @@ Log::Log()
     add("--- Begin logging now ---");
 }
 
-bool Log::load_log(const char path[]) //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened
+bool Log::load_log(const char path[])
 {
     logstr.clear();
     ifstream infile(path); //create filestream to read, open file
@@ -37,7 +37,7 @@ bool Log::load_log(const char path[]) //loads a saved log from file 'filename' -
 }
 
 //TODO last line is written twice into text-file!
-bool Log::save_log(const char path[]) //saves 'logstr' to file 'path' or overwrites it (!) -- return value: true=ok | errors: false=file could not be opened
+bool Log::save_log(const char path[])
 {
     ofstream file(path, ios::trunc); //create filestream to write, open file
     if (file.is_open() == false) return false; //file not opended -> abort and return false
