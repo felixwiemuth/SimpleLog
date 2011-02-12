@@ -12,11 +12,21 @@ class Log
     //data
     private:
         std::vector<std::string> logstr;
+        //text-vars
+        std::string std_file_ending; //standard file ending
+        std::string std_file_name; //standard file name
+        std::string seperation_symbol; //string to seperate log entries in log-file
+        std::string output_symbol; //string to be put before every log entry printed in the console
+        std::string error_symbol;
+        //messages
+        std::string msg_log_info; //information about "SimpleLog" at construction of object
+        std::string msg_begin_log; //information about starting to log
 
     //methods declaration
     public:
         //constructors
         Log();
+        //todo add contructor with direct loading of file!
 
         //methods
         bool load(const char path[]); //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened

@@ -12,8 +12,16 @@ using namespace std;
 
 Log::Log()
 {
-    add("Logging done by Log 1.0");
-    add("--- Begin logging now ---");
+    std_file_ending = ".log";
+    std_file_name = "log";
+    seperation_symbol = "\n";
+    output_symbol = ">>> ";
+    error_symbol = "ERR: ";
+    msg_log_info = "Logging done by SimpleLog ALPHA";
+    msg_begin_log = "--- Begin logging now ---";
+
+    add(msg_log_info);
+    add(msg_begin_log);
 }
 
 bool Log::load(const char path[])
@@ -44,7 +52,7 @@ bool Log::save(const char path[])
 
     for(int i=0; i < logstr.size()-1; i++) //write line by line into textfile
     {
-        file << logstr[i] + "\n";
+        file << logstr[i] << seperation_symbol;
     }
     file << logstr.back(); //write last line without creating new line
 
@@ -61,7 +69,7 @@ void Log::add(string s)
 
 void Log::err(std::string s)
 {
-    logstr.push_back("ERR: " + s);
+    logstr.push_back(error_symbol + s);
     send_console();
 }
 
@@ -95,5 +103,5 @@ void Log::print()
 
 void Log::send_console()
 {
-    cout << ">>> " << logstr.back() << endl; //send every log entry to standard output
+    cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
 }
