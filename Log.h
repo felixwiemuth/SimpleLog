@@ -27,8 +27,11 @@ class Log
     //methods declaration
     public:
         //constructors
-        Log();
-        //todo add contructor with direct loading of file!
+        Log(); //create empty log
+        Log(const char path[]); //create log with 'logstr' from file 'path'
+
+        void init(); //set standard values for messages / echo
+        void log_info(); //logs information about Log at beginning
 
         //methods
         bool load(const char path[]); //loads a saved log from file 'filename' -- return value: true=ok | errors: false=file not found or could not be opened

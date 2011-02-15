@@ -12,6 +12,19 @@ using namespace std;
 
 Log::Log()
 {
+    init();
+    log_info();
+}
+
+Log::Log(const char path[])
+{
+    load(path);
+    init();
+    log_info();
+}
+
+void Log::init()
+{
     echo = true;
     std_file_ending = ".log";
     std_file_name = "log";
@@ -20,7 +33,10 @@ Log::Log()
     error_symbol = "ERR: ";
     msg_log_info = "Logging done by SimpleLog ALPHA";
     msg_begin_log = "--- Begin logging now ---";
+}
 
+void Log::log_info()
+{
     add(msg_log_info);
     add(msg_begin_log);
 }
