@@ -26,9 +26,9 @@ Log::Log(const char path[])
 void Log::init()
 {
     echo_on();
-    std_file_ending = ".log";
-    std_file_name = "log";
-    seperation_symbol = "\n";
+    file_ending = ".log";
+    file_name = "log";
+    seperator = "\n";
     output_symbol = ">>> ";
     error_symbol = "ERR: ";
     msg_log_info = "Logging done by SimpleLog ALPHA";
@@ -63,7 +63,7 @@ bool Log::load(const char path[])
 
 bool Log::load()
 {
-    return load((std_file_name + std_file_ending).c_str());
+    return load((file_name + file_ending).c_str());
 }
 
 bool Log::save(const char path[])
@@ -74,7 +74,7 @@ bool Log::save(const char path[])
 
     for(vector<string>::iterator entry = logstr.begin(); entry != logstr.end(); ++entry) //write line by line into textfile
     {
-        file << *entry << seperation_symbol;
+        file << *entry << seperator;
     }
     file << logstr.back(); //write last line without creating new line
 
@@ -85,7 +85,7 @@ bool Log::save(const char path[])
 
 bool Log::save()
 {
-    return save((std_file_name + std_file_ending).c_str());
+    return save((file_name + file_ending).c_str());
 }
 
 void Log::add(string s)
@@ -132,6 +132,31 @@ void Log::echo_err_on()
 void Log::echo_err_off()
 {
     echo_err = false;
+}
+
+void Log::set_file_ending(std::string file_ending)
+{
+    this->file_ending = file_ending;
+}
+void Log::set_file_name(std::string file_name)
+{
+    this->file_name = file_name;
+}
+void Log::set_seperator(std::string seperator)
+{
+    this->seperator = seperator;
+}
+void Log::set_output_symbol(std::string output_symbol)
+{
+    this->output_symbol = output_symbol;
+}
+void Log::set_error_symbol(std::string error_symbol)
+{
+    this->error_symbol = error_symbol;
+}
+void Log::set_msg_begin_log(std::string msg_begin_log)
+{
+    this->msg_begin_log = msg_begin_log;
 }
 
 void Log::print(unsigned int entry)
