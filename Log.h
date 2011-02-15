@@ -32,6 +32,7 @@ class Log
         Log(const char path[]); //create log with 'logstr' from file 'path'
 
         void init(); //set standard values for messages / echo
+        void reset_messages(); //sets message vars to standard messages
         void log_info(); //logs information about Log at beginning
 
         //methods

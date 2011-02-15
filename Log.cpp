@@ -26,6 +26,11 @@ Log::Log(const char path[])
 void Log::init()
 {
     echo_on();
+    reset_messages();
+}
+
+void Log::reset_messages()
+{
     file_ending = ".log";
     file_name = "log";
     seperator = "\n";
