@@ -33,6 +33,7 @@ class Log
 
         void init(); //set standard values for messages / echo
         void reset_messages(); //sets message vars to standard messages
+        void reset_configuration(); //sets configuration to default values
         void log_info(); //logs information about Log at beginning
 
         //methods

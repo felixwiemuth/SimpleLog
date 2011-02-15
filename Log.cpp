@@ -13,20 +13,19 @@ using namespace std;
 Log::Log()
 {
     init();
-    log_info();
 }
 
 Log::Log(const char path[])
 {
-    load(path);
     init();
-    log_info();
+    load(path);
 }
 
 void Log::init()
 {
-    echo_on();
+    reset_configuration();
     reset_messages();
+    log_info();
 }
 
 void Log::reset_messages()
@@ -38,6 +37,11 @@ void Log::reset_messages()
     error_symbol = "ERR: ";
     msg_log_info = "Logging done by SimpleLog ALPHA";
     msg_begin_log = "--- Begin logging now ---";
+}
+
+void Log::reset_configuration()
+{
+    echo_on();
 }
 
 void Log::log_info()
