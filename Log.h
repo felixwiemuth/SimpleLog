@@ -13,7 +13,8 @@ class Log
     private:
         std::vector<std::string> logstr;
         //mode vars
-        bool echo; //if set 'true', every new entry will be printed in console by 'send_console()'
+        bool echo_msg; //'true' = show messages in console
+        bool echo_err; //'true' = show errors in console
         //text-vars
         std::string std_file_ending; //standard file ending
         std::string std_file_name; //standard file name
@@ -44,6 +45,10 @@ class Log
         //mode switches
         void echo_on();
         void echo_off();
+        void echo_msg_on();
+        void echo_msg_off();
+        void echo_err_on();
+        void echo_err_off();
 
         //print methods
         void print(unsigned int entry); //displays 'logstr[entry]'

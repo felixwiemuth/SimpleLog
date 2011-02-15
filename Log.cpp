@@ -25,7 +25,7 @@ Log::Log(const char path[])
 
 void Log::init()
 {
-    echo = true;
+    echo_on();
     std_file_ending = ".log";
     std_file_name = "log";
     seperation_symbol = "\n";
@@ -91,23 +91,47 @@ bool Log::save()
 void Log::add(string s)
 {
     logstr.push_back(s);
-    send_console();
+    if (echo_msg)
+        send_console();
 }
 
 void Log::err(std::string s)
 {
     logstr.push_back(error_symbol + s);
-    send_console();
+    if (echo_err)
+        send_console();
 }
 
 void Log::echo_on()
 {
-    echo = true;
+    echo_msg = true;
+    echo_err = true;
 }
 
 void Log::echo_off()
 {
-    echo = false;
+    echo_msg = false;
+    echo_err = false;
+}
+
+void Log::echo_msg_on()
+{
+    echo_msg = true;
+}
+
+void Log::echo_msg_off()
+{
+    echo_msg = false;
+}
+
+void Log::echo_err_on()
+{
+    echo_err = true;
+}
+
+void Log::echo_err_off()
+{
+    echo_err = false;
 }
 
 void Log::print(unsigned int entry)
@@ -141,6 +165,5 @@ void Log::print()
 
 void Log::send_console()
 {
-    if (echo)
-        cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
+    cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
 }
