@@ -63,7 +63,7 @@ bool Log::load(const char path[])
 
 bool Log::load()
 {
-    load((std_file_name + std_file_ending).c_str());
+    return load((std_file_name + std_file_ending).c_str());
 }
 
 bool Log::save(const char path[])
@@ -85,7 +85,7 @@ bool Log::save(const char path[])
 
 bool Log::save()
 {
-    save((std_file_name + std_file_ending).c_str());
+    return save((std_file_name + std_file_ending).c_str());
 }
 
 void Log::add(string s)
@@ -167,3 +167,4 @@ void Log::send_console()
 {
     cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
 }
+
