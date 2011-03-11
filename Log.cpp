@@ -152,27 +152,32 @@ void Log::echo_err_off()
     echo_err = false;
 }
 
-void Log::set_file_ending(std::string file_ending)
+void Log::set_name(std::string name)
+{
+    this->name = name;
+}
+
+void Log::set_file_ending(string file_ending)
 {
     this->file_ending = file_ending;
 }
-void Log::set_file_name(std::string file_name)
+void Log::set_file_name(string file_name)
 {
     this->file_name = file_name;
 }
-void Log::set_seperator(std::string seperator)
+void Log::set_seperator(string seperator)
 {
     this->seperator = seperator;
 }
-void Log::set_output_symbol(std::string output_symbol)
+void Log::set_output_symbol(string output_symbol)
 {
     this->output_symbol = output_symbol;
 }
-void Log::set_error_symbol(std::string error_symbol)
+void Log::set_error_symbol(string error_symbol)
 {
     this->error_symbol = error_symbol;
 }
-void Log::set_msg_begin_log(std::string msg_begin_log)
+void Log::set_msg_begin_log(string msg_begin_log)
 {
     this->msg_begin_log = msg_begin_log;
 }
@@ -214,13 +219,8 @@ void Log::print()
     }
 }
 
-void Log::log(string s)
-{
-
-}
-
 void Log::send_console()
 {
-    cout << output_symbol << logstr.back() << endl; //send every log entry to standard output
+    cout << name << output_symbol << logstr.back() << endl; //send every log entry to standard output
 }
 

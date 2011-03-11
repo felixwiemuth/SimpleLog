@@ -16,6 +16,7 @@ class Log
         bool echo_msg; //'true' = show messages in console
         bool echo_err; //'true' = show errors in console
         //text-vars
+        std::string name; //string to be put before every output symbol (which is before entry)
         std::string file_ending; //standard file ending
         std::string file_name; //standard file name
         std::string seperator; //string to seperate log entries in log-file
@@ -55,6 +56,7 @@ class Log
         void echo_err_off();
 
         //set messages vars
+        void set_name(std::string name);
         void set_file_ending(std::string file_ending);
         void set_file_name(std::string file_name);
         void set_seperator(std::string seperator);
@@ -71,7 +73,6 @@ class Log
         void print(); //displays whole content of 'logstr'
 
     private:
-        void log(std::string s);
         void send_console(); //sends last entry to standard output -- used to print new log entry
 };
 
