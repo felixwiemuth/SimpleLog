@@ -16,11 +16,12 @@ class Log
         bool echo_msg; //'true' = show messages in console
         bool echo_err; //'true' = show errors in console
         //text-vars
-        std::string name; //string to be put before every output symbol (which is before entry)
+        std::string name; //string to be put before every output symbol at printing to console
+        std::string prefix; //string to be put before every entry
         std::string file_ending; //standard file ending
         std::string file_name; //standard file name
         std::string seperator; //string to seperate log entries in log-file
-        std::string output_symbol; //string to be put before every log entry printed in the console
+        std::string output_symbol; //string to be put before every log entry at printing to console
         std::string error_symbol; //string to be put before every error entry
         //messages
         std::string msg_log_info; //information about "SimpleLog" at construction of object
@@ -57,6 +58,7 @@ class Log
 
         //set messages vars
         void set_name(std::string name);
+        void set_prefix(std::string prefix);
         void set_file_ending(std::string file_ending);
         void set_file_name(std::string file_name);
         void set_seperator(std::string seperator);

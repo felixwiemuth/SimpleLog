@@ -101,7 +101,7 @@ bool Log::save()
 void Log::add(string s)
 {
     //add [and print]
-    logstr.push_back(s);
+    logstr.push_back(prefix + s);
     if (echo_msg)
         send_console();
     //send to remote
@@ -112,7 +112,7 @@ void Log::add(string s)
 void Log::err(std::string s)
 {
     //add [and print]
-    logstr.push_back(error_symbol + s);
+    logstr.push_back(prefix + error_symbol + s);
     if (echo_err)
         send_console();
     //send to remote
@@ -155,6 +155,11 @@ void Log::echo_err_off()
 void Log::set_name(std::string name)
 {
     this->name = name;
+}
+
+void Log::set_prefix(std::string prefix)
+{
+    this->prefix = prefix;
 }
 
 void Log::set_file_ending(string file_ending)
