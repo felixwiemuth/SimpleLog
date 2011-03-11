@@ -1,0 +1,19 @@
+SimpleLog - Copyright (C) 2011 by Felix Wiemuth
+========================================================================
+
+---------
+ License
+---------
+
+GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt
+
+
+-------------
+ Description
+-------------
+
+SimpleLog is a C++ class to easily log your programs activity (or whatever text you want to log) with several extras.
+
+-------------
+ Features
+-------------
