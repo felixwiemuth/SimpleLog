@@ -23,6 +23,7 @@ Log::Log(const char path[])
 
 void Log::init()
 {
+    remote = 0;
     reset_configuration();
     reset_messages();
     log_info();
@@ -99,16 +100,24 @@ bool Log::save()
 
 void Log::add(string s)
 {
+    //add [and print]
     logstr.push_back(s);
     if (echo_msg)
         send_console();
+    //send to remote
+    if (remote != 0)
+        remote->add(s);
 }
 
 void Log::err(std::string s)
 {
+    //add [and print]
     logstr.push_back(error_symbol + s);
     if (echo_err)
         send_console();
+    //send to remote
+    if (remote != 0)
+        remote->err(s);
 }
 
 void Log::echo_on()
@@ -168,6 +177,14 @@ void Log::set_msg_begin_log(std::string msg_begin_log)
     this->msg_begin_log = msg_begin_log;
 }
 
+void Log::set_remote(Log* remote_log)
+{
+    if (remote_log != this)
+        remote = remote_log;
+    else
+        remote = 0;
+}
+
 void Log::print(unsigned int entry)
 {
     if (entry >= logstr.size())
@@ -195,6 +212,11 @@ void Log::print()
     {
         cout << *entry << endl;
     }
+}
+
+void Log::log(string s)
+{
+
 }
 
 void Log::send_console()

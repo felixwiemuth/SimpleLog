@@ -24,6 +24,8 @@ class Log
         //messages
         std::string msg_log_info; //information about "SimpleLog" at construction of object
         std::string msg_begin_log; //information about starting to log
+        //remote Log -- another object of class 'Log' which should log everything this log does
+        Log* remote;
 
     //methods declaration
     public:
@@ -60,12 +62,16 @@ class Log
         void set_error_symbol(std::string error_symbol);
         void set_msg_begin_log(std::string msg_begin_log);
 
+        //set remote log (0 = no remote)
+        void set_remote(Log* remote_log); //sets 'remote' to 'remote_log' (if 'remote_log' != 'this')
+
         //print methods
         void print(unsigned int entry); //displays 'logstr[entry]'
         void print(unsigned int start, unsigned int end); //displays 'logstr[start]' to 'logstr[end]' -- if end<start logstr[start] to logstr[entries] will be displayes
         void print(); //displays whole content of 'logstr'
 
     private:
+        void log(std::string s);
         void send_console(); //sends last entry to standard output -- used to print new log entry
 };
 
