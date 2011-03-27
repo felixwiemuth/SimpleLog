@@ -6,6 +6,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 
 using namespace std;
@@ -26,6 +28,8 @@ void Log::init()
     remote = 0;
     reset_configuration();
     reset_messages();
+    count_reset();
+    count_on();
     log_info();
 }
 
@@ -101,7 +105,12 @@ bool Log::save()
 void Log::add(string s)
 {
     //add [and print]
-    logstr.push_back(prefix + s);
+    stringstream sstr;
+    sstr << prefix;
+    if (cnt != 0)
+        sstr << setfill('0') << setw(3) << (*cnt)++ << " ";
+    sstr << s;
+    logstr.push_back(sstr.str());
     if (echo_msg)
         send_console();
     //send to remote
@@ -112,7 +121,12 @@ void Log::add(string s)
 void Log::err(std::string s)
 {
     //add [and print]
-    logstr.push_back(prefix + error_symbol + s);
+    stringstream sstr;
+    sstr << prefix;
+    if (cnt != 0)
+        sstr << setfill('0') << setw(3) << (*cnt)++ << " ";
+    sstr << error_symbol << s;
+    logstr.push_back(sstr.str());
     if (echo_err)
         send_console();
     //send to remote
@@ -185,6 +199,26 @@ void Log::set_error_symbol(string error_symbol)
 void Log::set_msg_begin_log(string msg_begin_log)
 {
     this->msg_begin_log = msg_begin_log;
+}
+
+void Log::count_on()
+{
+    cnt = &cnt_own;
+}
+
+void Log::count_on(int* cnt)
+{
+    this->cnt = cnt;
+}
+
+void Log::count_off()
+{
+    cnt = 0;
+}
+
+void Log::count_reset()
+{
+    cnt_own = 0;
 }
 
 void Log::set_remote(Log* remote_log)
