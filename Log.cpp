@@ -260,6 +260,21 @@ void Log::print()
 
 void Log::send_console()
 {
-    cout << name << output_symbol << logstr.back() << endl; //send every log entry to standard output
+    string output = logstr.back();
+
+    size_t pos = 0;
+    size_t found;
+    //amount of characters to indent
+    size_t n = output_symbol.size() + prefix.size() + name.size();
+    if (cnt != 0)
+        n += 4; //3 digits + 1 space
+    //replace
+    while((found = output.find('\n', pos)) != string::npos)
+    {
+        output.insert(++found, n, ' ');
+        pos = found + n;
+    }
+
+    cout << name << output_symbol << output << endl; //send every log entry to standard output
 }
 
