@@ -32,6 +32,7 @@ Log::~Log()
 void Log::init()
 {
     //TODO move inits of configs to 'reset_configuration()'!
+    version = "1.0.2 BETA";
     autosave = 0;
     remote = 0;
     reset_configuration();
@@ -48,7 +49,7 @@ void Log::reset_messages()
     seperator = "\n";
     output_symbol = ">>> ";
     error_symbol = "ERR: ";
-    msg_log_info = "Logging done by SimpleLog ALPHA";
+    msg_log_info = "Logging done by SimpleLog " + version;
     msg_begin_log = "--- Begin logging now ---";
 }
 
@@ -238,6 +239,11 @@ void Log::count_off()
 void Log::count_reset()
 {
     cnt_own = 0;
+}
+
+string Log::get_version()
+{
+    return version;
 }
 
 void Log::set_remote(Log* remote_log)
