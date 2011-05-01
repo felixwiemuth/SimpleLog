@@ -31,14 +31,9 @@ Log::~Log()
 
 void Log::init()
 {
-    //TODO move inits of configs to 'reset_configuration()'!
     version = "1.0.2 BETA";
-    autosave = 0;
-    remote = 0;
     reset_configuration();
     reset_messages();
-    count_reset();
-    count_on();
     log_info();
 }
 
@@ -55,7 +50,11 @@ void Log::reset_messages()
 
 void Log::reset_configuration()
 {
+    autosave = 0;
+    remote = 0;
     echo_on();
+    count_reset();
+    count_on();
 }
 
 void Log::log_info()
