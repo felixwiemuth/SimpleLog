@@ -16,6 +16,7 @@ class Log
         //mode vars
         bool echo_msg; //'true' = show messages in console
         bool echo_err; //'true' = show errors in console
+        int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object
         //text-vars
         std::string name; //string to be put before every output symbol at printing to console
         std::string prefix; //string to be put before every entry
@@ -39,6 +40,9 @@ class Log
         Log(); //create empty log
         Log(const char path[]); //create log with 'logstr' from file 'path'
 
+        //destructors
+        ~Log();
+
         void init(); //set standard values for messages / echo
         void reset_messages(); //sets message vars to standard messages
         void reset_configuration(); //sets configuration to default values
@@ -59,6 +63,7 @@ class Log
         void echo_msg_off();
         void echo_err_on();
         void echo_err_off();
+        void set_autosave(int mode);
 
         //set messages vars
         void set_name(std::string name);

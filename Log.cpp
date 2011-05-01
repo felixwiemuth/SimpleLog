@@ -23,8 +23,16 @@ Log::Log(const char path[])
     load(path);
 }
 
+Log::~Log()
+{
+    if (autosave == 2)
+        save();
+}
+
 void Log::init()
 {
+    //TODO move inits of configs to 'reset_configuration()'!
+    autosave = 0;
     remote = 0;
     reset_configuration();
     reset_messages();
@@ -116,6 +124,9 @@ void Log::add(string s)
     //send to remote
     if (remote != 0)
         remote->add(s);
+    //autosave
+    if (autosave == 1)
+        save();
 }
 
 void Log::err(std::string s)
@@ -132,6 +143,8 @@ void Log::err(std::string s)
     //send to remote
     if (remote != 0)
         remote->err(s);
+    if (autosave == 1)
+        save();
 }
 
 void Log::echo_on()
@@ -154,6 +167,12 @@ void Log::echo_msg_on()
 void Log::echo_msg_off()
 {
     echo_msg = false;
+}
+
+void Log::set_autosave(int mode)
+{
+    if (mode >= 0 && mode <= 2)
+        autosave = mode;
 }
 
 void Log::echo_err_on()
