@@ -31,7 +31,7 @@ Log::~Log()
 
 void Log::init()
 {
-    version = "1.0.3 BETA";
+    version = "1.1.0 BETA";
     reset_configuration();
     reset_messages();
 }
