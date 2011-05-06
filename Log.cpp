@@ -8,6 +8,7 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <ctime>
 
 
 using namespace std;
@@ -38,6 +39,8 @@ void Log::init()
 
 void Log::reset_messages()
 {
+    file_title_1 = "\n***********************************************************************\n******************** Log saved ";
+    file_title_2 = " ********************\n***********************************************************************\n";
     file_ending = ".log";
     file_name = "log";
     seperator = "\n";
@@ -94,6 +97,8 @@ bool Log::save(const char path[])
     ofstream file(path, ios::app); //create filestream to write, open file
     if (file.is_open() == false)
         return false; //file not opended -> abort and return false
+
+    file << file_title_1 << get_time() << file_title_2;
 
     for(vector<string>::iterator entry = logstr.begin(); entry != logstr.end()-1; ++entry) //write line by line into textfile
     {
@@ -204,6 +209,14 @@ void Log::set_name(std::string name)
 {
     this->name = name;
 }
+void Log::set_file_tile_1(string file_title_1)
+{
+    this->file_title_1 = file_title_1;
+}
+void Log::set_file_tile_2(string file_title_2)
+{
+    this->file_title_2 = file_title_2;
+}
 void Log::set_prefix(std::string prefix)
 {
     this->prefix = prefix;
@@ -261,6 +274,17 @@ string Log::get_version()
 ostringstream& Log::ref_buff()
 {
     return buff;
+}
+
+string Log::get_time()
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer [80];
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+    strftime (buffer,80,"%d.%m.%Y %X",timeinfo);
+    return buffer;
 }
 
 void Log::set_remote(Log* remote_log)
