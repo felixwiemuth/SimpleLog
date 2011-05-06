@@ -91,7 +91,7 @@ bool Log::save(const char path[])
 {
     if (logstr.size() == 0) //prevent from saving empty log
         return false;
-    ofstream file(path, ios::trunc); //create filestream to write, open file
+    ofstream file(path, ios::app); //create filestream to write, open file
     if (file.is_open() == false)
         return false; //file not opended -> abort and return false
 
@@ -99,7 +99,7 @@ bool Log::save(const char path[])
     {
         file << *entry << seperator;
     }
-    file << logstr.back(); //write last line without creating new line
+    file << logstr.back() << '\n'; //write last line without seperator, finish line
 
     file.close(); //close file filestream
 
