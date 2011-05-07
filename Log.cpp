@@ -56,6 +56,7 @@ void Log::reset_configuration()
     set_remote(0);
     echo_on();
     time_stamp_on();
+    set_max_width(0);
     set_autosave(0);
     count_reset();
     count_on();
@@ -158,11 +159,11 @@ void Log::entry(string s, bool err)
     }
     else
         sstr << s;
-    logstr.push_back(sstr.str());
+    logstr.push_back( format_entry(sstr.str()) );
 
     //print
     if ( (!err && echo_msg) || (err && echo_err) )
-        send_console();
+        cout << name << output_symbol << format_entry(sstr.str(), 1) << endl; //send log entry to standard output
 
     //send to remote
     if (remote != 0)
@@ -195,12 +196,6 @@ void Log::echo_msg_off()
     echo_msg = false;
 }
 
-void Log::set_autosave(int mode)
-{
-    if (mode >= 0 && mode <= 2)
-        autosave = mode;
-}
-
 void Log::echo_err_on()
 {
     echo_err = true;
@@ -219,6 +214,17 @@ void Log::time_stamp_on()
 void Log::time_stamp_off()
 {
     timestamp = false;
+}
+
+void Log::set_max_width(int n)
+{
+    max_width = n;
+}
+
+void Log::set_autosave(int mode)
+{
+    if (mode >= 0 && mode <= 2)
+        autosave = mode;
 }
 
 void Log::set_name(std::string name)
@@ -346,25 +352,27 @@ void Log::print()
     }
 }
 
-void Log::send_console()
+string Log::format_entry(string raw, bool mode)
 {
-    string output = logstr.back();
+    string ret = raw;
 
-    size_t pos = 0;
-    size_t found;
     //amount of characters to indent
-    size_t n = output_symbol.size() + prefix.size() + name.size();
+    size_t n = prefix.size() + name.size();
+    if (mode == 1)
+        n += output_symbol.size() + name.size();
     if (cnt != 0)
         n += 4; //3 digits + 1 space
     if (timestamp)
         n += time_format_size;
+
     //replace
-    while((found = output.find('\n', pos)) != string::npos)
+    size_t pos = 0;
+    size_t found;
+    while((found = ret.find('\n', pos)) != string::npos)
     {
-        output.insert(++found, n, ' ');
+        ret.insert(++found, n, ' ');
         pos = found + n;
     }
-
-    cout << name << output_symbol << output << endl; //send every log entry to standard output
+    return ret;
 }
 
