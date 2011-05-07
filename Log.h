@@ -19,6 +19,7 @@ class Log
         //mode vars
         bool echo_msg; //'true' = show messages in console
         bool echo_err; //'true' = show errors in console
+        bool timestamp; //'true' = put date formatted accourding to 'time_format' in front of every entry
         int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object
         //text-vars
         std::string version; //version string
@@ -26,6 +27,8 @@ class Log
         std::string file_title_1; //text to be put before date/time (of saving) as title in the file where log is saved
         std::string file_title_2; //text to be put after date/time (of saving) as title in the file where log is saved
         std::string prefix; //string to be put before every entry
+        std::string time_format; //date format to use for entries and as file titles - refer to "http://www.cplusplus.com/reference/clibrary/ctime/strftime/" for format style
+        int time_format_size; //amount of characters used by time format 'format'
         std::string file_ending; //standard file ending
         std::string file_name; //standard file name
         std::string seperator; //string to seperate log entries in log-file
@@ -59,10 +62,11 @@ class Log
         bool load(); //calls 'load(const char path[])' with 'std_file_name' and 'std_file_ending'
         bool save(const char path[]); //saves 'logstr' to file 'path' or overwrites it (!) -- return value: true=ok | errors: false=file could not be opened
         bool save(); //calls 'save(const char path[])' with 'std_file_name' and 'std_file_ending'
-        void add(std::string s); //add normal entry
-        void add(); //add normal entry using content of buffer 'buff'
-        void err(std::string s); //add error entry
-        void err(); //add error entry using content of buffer 'buff'
+        void add(std::string s); //add normal entry (equal to 'entry(s)')
+        void add(); //add normal entry using content of buffer 'buff' (equal to 'entry("")')
+        void err(std::string s); //add error entry (equal to 'entry(s, true)')
+        void err(); //add error entry using content of buffer 'buff' (equal to 'entry("", true)')
+        void entry(std::string s = "", bool err = false); //add an entry 's' (with 'err', it gets an error entry) - if 's==""' content of buffer 'buff' is used as entry text
 
         //mode switches
         void echo_on();
@@ -71,6 +75,8 @@ class Log
         void echo_msg_off();
         void echo_err_on();
         void echo_err_off();
+        void time_stamp_on();
+        void time_stamp_off();
         void set_autosave(int mode);
 
         //set text/message vars
@@ -78,6 +84,7 @@ class Log
         void set_file_tile_1(std::string file_title_1);
         void set_file_tile_2(std::string file_title_2);
         void set_prefix(std::string prefix);
+        void set_time_format(std::string time_format); //also sets 'time_format_size' correctly!
         void set_file_ending(std::string file_ending);
         void set_file_name(std::string file_name);
         void set_seperator(std::string seperator);
@@ -99,7 +106,7 @@ class Log
         std::ostringstream& ref_buff(); //returns reference to 'buff'
 
         //additional "gets"
-        std::string get_time(); //returns formated string with current time
+        std::string get_time(); //returns string with current time formatted according to 'format'
 
         //print methods
         void print(unsigned int entry); //displays 'logstr[entry]'

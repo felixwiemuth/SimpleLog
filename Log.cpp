@@ -43,6 +43,7 @@ void Log::reset_messages()
     file_title_2 = " ********************\n***********************************************************************\n";
     file_ending = ".log";
     file_name = "log";
+    set_time_format("%d.%m.%Y %X ");
     seperator = "\n";
     output_symbol = ">>> ";
     error_symbol = "ERR: ";
@@ -52,9 +53,10 @@ void Log::reset_messages()
 
 void Log::reset_configuration()
 {
-    autosave = 0;
-    remote = 0;
+    set_remote(0);
     echo_on();
+    time_stamp_on();
+    set_autosave(0);
     count_reset();
     count_on();
 }
@@ -69,7 +71,7 @@ bool Log::load(const char path[])
 {
     logstr.clear();
     ifstream infile(path); //create filestream to read, open file
-    if (infile.is_open() == false)
+    if (!infile.is_open())
         return false; //file not found or couldn´t be opened -> abort and return false
 
     string line; //buffer for single lines of the file
@@ -95,7 +97,7 @@ bool Log::save(const char path[])
     if (logstr.size() == 0) //prevent from saving empty log
         return false;
     ofstream file(path, ios::app); //create filestream to write, open file
-    if (file.is_open() == false)
+    if (!file.is_open())
         return false; //file not opended -> abort and return false
 
     file << file_title_1 << get_time() << file_title_2;
@@ -118,53 +120,57 @@ bool Log::save()
 
 void Log::add(string s)
 {
-    //add [and print]
-    stringstream sstr;
-    sstr << prefix;
-    if (cnt != 0)
-        sstr << setfill('0') << setw(3) << (*cnt)++ << " ";
-    sstr << s;
-    logstr.push_back(sstr.str());
-    if (echo_msg)
-        send_console();
-    //send to remote
-    if (remote != 0)
-        remote->add(s);
-    //autosave
-    if (autosave == 1)
-        save();
+    entry(s);
 }
 
 void Log::add()
 {
-    add(buff.str());
-    buff.str("");
-    buff.clear();
+    entry("");
 }
 
 void Log::err(std::string s)
 {
-    //add [and print]
-    stringstream sstr;
-    sstr << prefix;
-    if (cnt != 0)
-        sstr << setfill('0') << setw(3) << (*cnt)++ << " ";
-    sstr << error_symbol << s;
-    logstr.push_back(sstr.str());
-    if (echo_err)
-        send_console();
-    //send to remote
-    if (remote != 0)
-        remote->err(s);
-    if (autosave == 1)
-        save();
+    entry(s, true);
 }
 
 void Log::err()
 {
-    err(buff.str());
-    buff.str("");
-    buff.clear();
+    entry("", true);
+}
+
+void Log::entry(string s, bool err)
+{
+    //add
+    stringstream sstr;
+    sstr << prefix;
+    if (cnt != 0)
+        sstr << setfill('0') << setw(3) << (*cnt)++ << " ";
+    if (timestamp)
+        sstr << get_time();
+    if (err)
+        sstr << error_symbol;
+    if (s == "") //take text from 'buff'
+    {
+        sstr << buff.str();
+        //reset 'buff'
+        buff.str("");
+        buff.clear();
+    }
+    else
+        sstr << s;
+    logstr.push_back(sstr.str());
+
+    //print
+    if ( (!err && echo_msg) || (err && echo_err) )
+        send_console();
+
+    //send to remote
+    if (remote != 0)
+        remote->entry(s, err);
+
+    //autosave
+    if (autosave == 1)
+        save();
 }
 
 void Log::echo_on()
@@ -205,6 +211,16 @@ void Log::echo_err_off()
     echo_err = false;
 }
 
+void Log::time_stamp_on()
+{
+    timestamp = true;
+}
+
+void Log::time_stamp_off()
+{
+    timestamp = false;
+}
+
 void Log::set_name(std::string name)
 {
     this->name = name;
@@ -220,6 +236,12 @@ void Log::set_file_tile_2(string file_title_2)
 void Log::set_prefix(std::string prefix)
 {
     this->prefix = prefix;
+}
+void Log::set_time_format(string time_format)
+{
+    this->time_format = time_format;
+    string test = get_time();
+    time_format_size = test.size();
 }
 void Log::set_file_ending(string file_ending)
 {
@@ -281,9 +303,9 @@ string Log::get_time()
     time_t rawtime;
     struct tm * timeinfo;
     char buffer [80];
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
-    strftime (buffer,80,"%d.%m.%Y %X",timeinfo);
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    strftime (buffer, 80, time_format.c_str(), timeinfo);
     return buffer;
 }
 
@@ -334,6 +356,8 @@ void Log::send_console()
     size_t n = output_symbol.size() + prefix.size() + name.size();
     if (cnt != 0)
         n += 4; //3 digits + 1 space
+    if (timestamp)
+        n += time_format_size;
     //replace
     while((found = output.find('\n', pos)) != string::npos)
     {
