@@ -40,7 +40,7 @@ void Log::init()
 void Log::reset_messages()
 {
     file_title_1 = "\n***********************************************************************\n******************** Log saved ";
-    file_title_2 = " ********************\n***********************************************************************\n";
+    file_title_2 = "********************\n***********************************************************************\n";
     file_ending = ".log";
     file_name = "log";
     set_time_format("%d.%m.%Y %X ");
@@ -216,7 +216,7 @@ void Log::time_stamp_off()
     timestamp = false;
 }
 
-void Log::set_max_width(int n)
+void Log::set_max_width(size_t n)
 {
     max_width = n;
 }
@@ -357,7 +357,7 @@ string Log::format_entry(string raw, bool mode)
     string ret = raw;
 
     //amount of characters to indent
-    size_t n = prefix.size() + name.size();
+    size_t n = prefix.size();
     if (mode == 1)
         n += output_symbol.size() + name.size();
     if (cnt != 0)
@@ -365,7 +365,28 @@ string Log::format_entry(string raw, bool mode)
     if (timestamp)
         n += time_format_size;
 
-    //replace
+    if (max_width > n)
+    {
+        //insert '\n' when number of characters in a line exceed 'max'width'
+        size_t max = max_width - n; //max characters from indent on
+        size_t cnt = 0;
+        size_t pos = n;
+        if (mode == 1) //'output_symbol' and 'name' are not in 'ret' and do not influence start position!
+            pos -= output_symbol.size() + name.size();
+        for (; pos < ret.size(); pos++)
+        {
+            if (ret[pos] != '\n')
+            {
+                ++cnt;
+                if (cnt == max) //ret[pos] is last character in line
+                    ret.insert(ret.begin()+pos+1, '\n'); //insert new line after last character
+            }
+            else
+                cnt = 0;
+        }
+    }
+
+    //insert indent at new lines
     size_t pos = 0;
     size_t found;
     while((found = ret.find('\n', pos)) != string::npos)

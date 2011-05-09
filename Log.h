@@ -20,7 +20,7 @@ class Log
         bool echo_msg; //'true' = show messages in console
         bool echo_err; //'true' = show errors in console
         bool timestamp; //'true' = put date formatted accourding to 'time_format' in front of every entry
-        int max_width; //maximum number of characters in an entry (incl. prefix etc.) until a new line is inserted automatically
+        size_t max_width; //maximum number of characters in an entry (incl. prefix etc.) until a new line is inserted automatically ('0'=no maximum) -- must be greater than width of text before real entry to take effect
         int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object
         //text-vars
         std::string version; //version string
@@ -78,7 +78,7 @@ class Log
         void echo_err_off();
         void time_stamp_on();
         void time_stamp_off();
-        void set_max_width(int n);
+        void set_max_width(size_t n);
         void set_autosave(int mode);
 
         //set text/message vars
