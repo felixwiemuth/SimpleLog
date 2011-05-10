@@ -21,7 +21,7 @@ class Log
         bool echo_err; //'true' = show errors in console
         bool timestamp; //'true' = put date formatted accourding to 'time_format' in front of every entry
         size_t max_width; //maximum number of characters in an entry (incl. prefix etc.) until a new line is inserted automatically ('0'=no maximum) -- must be greater than width of text before real entry to take effect
-        int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object
+        int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object -- you should set the mode before starting to log for getting nicer results ;)
         //text-vars
         std::string version; //version string
         std::string name; //string to be put before every output symbol at printing to console
@@ -117,6 +117,7 @@ class Log
 
     private:
         std::string format_entry(std::string raw, bool mode = 0); //formats the raw entry regarding maximum width and indents at new lines - mode: 0 = normal (saved in 'logstr' and file) 1 = console (e.g. with 'output_symbol')
+        void save_last_entry(); //used to save the last entry when 'autosave' is in mode '1'
 };
 
 

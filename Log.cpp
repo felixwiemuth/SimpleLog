@@ -171,7 +171,7 @@ void Log::entry(string s, bool err)
 
     //autosave
     if (autosave == 1)
-        save();
+        save_last_entry();
 }
 
 void Log::echo_on()
@@ -395,5 +395,16 @@ string Log::format_entry(string raw, bool mode)
         pos = found + n;
     }
     return ret;
+}
+
+void Log::save_last_entry()
+{
+    if (logstr.size() == 0)
+        return;
+    ofstream file(file_name+file_ending, ios::app); //create filestream to write, open file
+    if (!file.is_open())
+        return; //file not opended -> abort
+    file << logstr.back() << seperator; //append line to file and insert seperator
+    file.close(); //close stream
 }
 
