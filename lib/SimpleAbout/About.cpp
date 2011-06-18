@@ -58,7 +58,7 @@ void About::generate(bool f)
         copyright_author = author;
     if (f || copyright.empty())
     {
-        copyright = pre_copyright_1;//+ copyright_year + pre_copyright_2 + copyright_author;
+        copyright = pre_copyright_1;
         if (!copyright_year.empty())
             copyright += " " + copyright_year;
         if (!copyright_author.empty())
