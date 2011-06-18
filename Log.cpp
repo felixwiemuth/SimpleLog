@@ -2,7 +2,6 @@
    This code is licensed under the GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt */
 
 #include "Log.h"
-//#include "lib/SimpleAbout/About.h"
 
 #include <string>
 #include <fstream>

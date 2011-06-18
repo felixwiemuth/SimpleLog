@@ -7,9 +7,6 @@
 #include <string>
 #include <sstream>
 
-
-//class to log all program acitivity
-
 class Log
 {
     public:
