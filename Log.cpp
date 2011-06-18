@@ -398,7 +398,7 @@ void Log::save_last_entry()
 {
     if (logstr.size() == 0)
         return;
-    ofstream file(file_name+file_ending, ios::app); //create filestream to write, open file
+    ofstream file((file_name+file_ending).c_str(), ios::app); //create filestream to write, open file
     if (!file.is_open())
         return; //file not opended -> abort
     file << logstr.back() << seperator; //append line to file and insert seperator
