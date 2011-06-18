@@ -1,6 +1,8 @@
 #ifndef LOG_H_INCLUDED
 #define LOG_H_INCLUDED
 
+#include "lib/SimpleAbout/About.h"
+
 #include <vector>
 #include <string>
 #include <sstream>
@@ -10,6 +12,9 @@
 
 class Log
 {
+    public:
+        static const About about;
+
     //data
     private:
         //vector that includes log entries (each element / string is one entry)
@@ -23,7 +28,6 @@ class Log
         size_t max_width; //maximum number of characters in an entry (incl. prefix etc.) until a new line is inserted automatically ('0'=no maximum) -- must be greater than width of text before real entry to take effect
         int autosave; //mode of autosaving: 0=no autosave 1=save after every entry 2=save on destruction of object -- you should set the mode before starting to log for getting nicer results ;)
         //text-vars
-        std::string version; //version string
         std::string name; //string to be put before every output symbol at printing to console
         std::string file_title_1; //text to be put before date/time (of saving) as title in the file where log is saved
         std::string file_title_2; //text to be put after date/time (of saving) as title in the file where log is saved

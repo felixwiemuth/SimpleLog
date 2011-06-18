@@ -2,6 +2,7 @@
    This code is licensed under the GNU GENERAL PUBLIC LICENSE http://www.gnu.org/licenses/gpl.txt */
 
 #include "Log.h"
+//#include "lib/SimpleAbout/About.h"
 
 #include <string>
 #include <fstream>
@@ -12,6 +13,8 @@
 
 
 using namespace std;
+
+const About Log::about("SimpleLog", "1.1.4", "Felix Wiemuth", "2011", About::LICENSE_GPL);
 
 Log::Log()
 {
@@ -32,7 +35,6 @@ Log::~Log()
 
 void Log::init()
 {
-    version = "1.1.3 BETA";
     reset_configuration();
     reset_messages();
 }
@@ -47,7 +49,7 @@ void Log::reset_messages()
     seperator = "\n";
     output_symbol = ">>> ";
     error_symbol = "ERR: ";
-    msg_log_info = "Logging done by SimpleLog " + version;
+    msg_log_info = "Logging done by SimpleLog " + Log::about.version;
     msg_begin_log = "--- Begin logging now ---";
 }
 
@@ -292,11 +294,6 @@ void Log::count_off()
 void Log::count_reset()
 {
     cnt_own = 0;
-}
-
-string Log::get_version()
-{
-    return version;
 }
 
 ostringstream& Log::ref_buff()
